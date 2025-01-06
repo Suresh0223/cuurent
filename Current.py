@@ -1,11 +1,18 @@
+import os
 import tkinter as tk
 from time import strftime
 from flask import Flask
 
 app = Flask(__name__)
 
+if os.environ.get('DISPLAY', '') == '':
+    print('No display found. Using Xvfb.')
+    os.system('Xvfb :99 -screen 0 1024x768x16 &')
+    os.environ['DISPLAY'] = ':99.0'
+
 root = tk.Tk()
 root.title("Clock")
+root.geometry("400x300")
 
 clock_label = tk.Label(root, font=("Arial", 50), bg="light green", fg="blue")
 clock_label.pack( anchor = "center", fill ="both", expand = True)
